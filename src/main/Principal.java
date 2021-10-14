@@ -42,7 +42,26 @@ public class Principal extends PApplet
 	@Override
 	public void draw() //void Update
 	{		
-
+		if(udp.getMsgNum() == 1)
+		{
+			fill(255, 0, 0);
+			square(250, 250, 50);
+		}
+		if(udp.getMsgNum() == 2)
+		{
+			fill(255, 0, 0);
+			square(250, 300, 50);
+		}
+		if(udp.getMsgNum() == 3)
+		{
+			fill(255, 0, 0);
+			square(250, 200, 50);
+		}
+		if(udp.getMsgNum() == 4)
+		{
+			fill(255, 0, 0);
+			square(200, 250, 50);
+		}
 	}
 
 }

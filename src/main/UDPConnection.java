@@ -11,6 +11,7 @@ public class UDPConnection extends Thread
 {
 
 	private DatagramSocket socket;
+	private int msgNum;
 	
 	public void run()
 	{
@@ -26,8 +27,11 @@ public class UDPConnection extends Thread
 				socket.receive(packet);
 				
 				String message = new String(packet.getData()).trim();
-				System.out.println("Datagram Received: ");
 				
+				System.out.println("Datagram Received: " + message);
+				
+				msgNum = Integer.parseInt(message);
+				System.out.println(msgNum);
 			}
 			
 		} catch (SocketException e) {
@@ -60,4 +64,14 @@ public class UDPConnection extends Thread
 				}
 			).start();
 	}
+
+	public int getMsgNum() {
+		return msgNum;
+	}
+
+	public void setMsgNum(int msgNum) {
+		this.msgNum = msgNum;
+	}
+	
+	
 }
