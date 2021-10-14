@@ -14,6 +14,8 @@ public class Principal extends PApplet
 	
 	InetAddress ip;
 	
+	UDPConnection udp;
+	
 	@Override
 	public void settings() //void Awake
 	{
@@ -32,6 +34,9 @@ public class Principal extends PApplet
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		udp = new UDPConnection();
+		udp.start();
 	}
 	
 	@Override
