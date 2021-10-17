@@ -18,6 +18,10 @@ public class Principal extends PApplet
 	
 	UDPConnection udp;
 	
+	Clock clock;
+
+	ArrayList<Clock> hourList;
+	
 	PImage beer, hDog, sub, yogurt;
 	
 	int x1, y1, x2, y2, x3, y3, x4, y4, x5, y5;
@@ -49,9 +53,13 @@ public class Principal extends PApplet
 		yogurt = loadImage("yogurt.jpg");
 		
 		foodArrList = new ArrayList<Foob>();
+		hourList = new ArrayList<Clock>();
 		
 		udp = new UDPConnection();
+		udp.setObserver(this);
 		udp.start();
+		
+		clock = new Clock(this, hour(), minute());
 	}
 	
 	@Override
@@ -63,61 +71,39 @@ public class Principal extends PApplet
 		
 		imageMode(CENTER);
 		
-		switch(udp.getNumberOfOrders())
+		for(int i = 0; i < hourList.size(); i++)
 		{
-		case 0:
-			break;
-		case 1:
-			checkImage(50, 50);
-			text(hour() + ":" + minute(), 80, 55);
-			break;
-		case 2:
-			checkImage(50, 100);
-			text(hour() + ":" + minute(), 80, 100);
-			break;
-		case 3:
-			checkImage(50, 150);
-			text(hour() + ":" + minute(), 80, 150);
-			break;
-		case 4:
-			checkImage(50, 200);
-			text(hour() + ":" + minute(), 80, 200);
-			break;
-		case 5:
-			checkImage(50, 250);
-			text(hour() + ":" + minute(), 80, 250);
-			break;
+			switch(udp.getNumberOfOrders())
+			{
+			case 0:
+				break;
+			case 1:
+				checkImage(50, 50);
+				hourList.get(i).buildClock(this, 80, 55);
+				break;
+			case 2:
+				checkImage(50, 100);
+				hourList.get(i).buildClock(this, 80, 105);
+				break;
+			case 3:
+				checkImage(50, 150);
+				hourList.get(i).buildClock(this, 80, 155);
+				break;
+			case 4:
+				checkImage(50, 200);
+				hourList.get(i).buildClock(this, 80, 205);
+				break;
+			case 5:
+				checkImage(50, 250);
+				hourList.get(i).buildClock(this, 80, 255);
+				break;
+			}
 		}
-		
-		/*if(udp.getNumberOfOrders() == 0)
-		{
-			
-		}
-		else if(udp.getNumberOfOrders() == 1)
-		{
-			checkImage(50, 50);
-			text(hour() + ":" + minute(), 80, 55);
-		}
-		else if(udp.getNumberOfOrders() == 2)
-		{
-			checkImage(50, 100);
-			text(hour() + ":" + minute(), 80, 105);
-		}
-		else if(udp.getNumberOfOrders() == 3)
-		{
-			checkImage(50, 150);
-			text(hour() + ":" + minute(), 80, 155);
-		}
-		else if(udp.getNumberOfOrders() == 4)
-		{
-			checkImage(50, 200);
-			text(hour() + ":" + minute(), 80, 205);
-		}
-		else if(udp.getNumberOfOrders() == 5)
-		{
-			checkImage(50, 250);
-			text(hour() + ":" + minute(), 80, 255);
-		}*/
+	}
+	
+	public void createClock()
+	{
+		hourList.add(new Clock(this, hour(), minute()));
 	}
 	
 	public void checkImage(int x, int y)
@@ -148,27 +134,27 @@ public class Principal extends PApplet
 	{
 		if(dist(mouseX, mouseY, 50, 50) < 25 && udp.getNumberOfOrders() >= 1)
 		{
-			udp.sendMessage("1");
+			udp.sendMessage("Pedido listo");
 			System.out.println("ENV 1");
 		}
 		if(dist(mouseX, mouseY, 50, 100) < 25 && udp.getNumberOfOrders() >= 2)
 		{
-			udp.sendMessage("1");
+			udp.sendMessage("Pedido listo");
 			System.out.println("ENV 2");
 		}
 		if(dist(mouseX, mouseY, 50, 150) < 25 && udp.getNumberOfOrders() >= 3)
 		{
-			udp.sendMessage("1");
+			udp.sendMessage("Pedido listo");
 			System.out.println("ENV 3");
 		}
 		if(dist(mouseX, mouseY, 50, 200) < 25 && udp.getNumberOfOrders() >= 4)
 		{
-			udp.sendMessage("1");
+			udp.sendMessage("Pedido listo");
 			System.out.println("ENV 4");
 		}
 		if(dist(mouseX, mouseY, 50, 250) < 25 && udp.getNumberOfOrders() >= 5)
 		{
-			udp.sendMessage("1");
+			udp.sendMessage("Pedido listo");
 			System.out.println("ENV 5");
 		}
 	}

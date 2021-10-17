@@ -14,6 +14,13 @@ public class UDPConnection extends Thread
 	public static int msgNum;
 	private int numberOfOrders;
 	
+	private Principal main;
+	
+	public void setObserver(Principal main)
+	{
+		this.main = main;
+	}
+	
 	public void run()
 	{
 		try {
@@ -30,6 +37,8 @@ public class UDPConnection extends Thread
 				String message = new String(packet.getData()).trim();
 				
 				System.out.println("Datagram Received: " + message);
+				
+				main.createClock();
 				
 				numberOfOrders++;
 				
